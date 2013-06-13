@@ -15,6 +15,10 @@ One test database and table are created by an imported sql script which you can 
 You have to modify the nginx vhosts file too and also edit your hosts file if you are going to use it on the localhost.
 Port 80 of the guest is forwarded to port 80 of the host machine so a http://localhost should load the default nginx server config.
 
+Mysql configuration is using innodb with some base values for buffer pool, log files, etc. so you will probaly want to change them too.
+
+Use "vagrant provision" if you make changes on the configuration files and they will be put in the running box and servers reloaded automatically.
+
 You have to install Vagrant, Puppet and Virtualbox before using this package.
 
 I am going to change this configuration from time to time while I am learning Vagrant, Puppet, bash, etc.
