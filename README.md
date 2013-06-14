@@ -1,4 +1,4 @@
-Vagrant
+Vagrant with PHP, MySQL and Nginx
 =======
 
 A Vagrantfile config file and some Puppet manifests + shell scripts and server configurations
