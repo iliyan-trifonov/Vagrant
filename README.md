@@ -17,6 +17,13 @@ Port 80 of the guest is forwarded to port 80 of the host machine so a http://loc
 
 Mysql configuration is using innodb with some base values for buffer pool, log files, etc. so you will probaly want to change them too.
 
+Instead of using the shared folders feature from the VM which I find very slow for a normal project structure
+I've decided to use rsync 2 times: when the box is started, one rsync syncs everything from host projects dir
+to the guest and after that one rsync constrantly syncs everything from the guest projects dir to the host
+projects dir through the shared folder which is used only by this command.
+I've used 30sec sleep before the sync from guest to host to run again so you may tweak it and make sure
+not to stop/destroy the box immediately after you saved a file there.
+
 Use "vagrant provision" if you make changes on the configuration files and they will be put in the running box and servers reloaded automatically.
 
 You have to install Vagrant, Puppet and Virtualbox before using this package.
@@ -38,3 +45,12 @@ It should finish with success and then you can add this line to your hosts file 
 using Notepad with admin privileges: '127.0.0.1 vagranttest.local' .
 Save and go to: 'http://vagranttest.local/' to see the test php running.
 Congratulations! :)
+
+From here:
+
+Put some new projects/files in the projects dir on the host.<br />
+Edit the nginx config, put new configs in sites-available and edit your hosts file.<br />
+Use http://vagranttest.local/phpmyadmin/ to manage your databases, with user and pass: 'root' by default.<br />
+Don't forget to 'vagrant provision' or 'vagrant halt' and then 'vagrant up' to resync the files
+from the host to the virtual box.<br />
+If you want to change the default configuration that is created, edit the manifest/s and recreate/provision the box.
