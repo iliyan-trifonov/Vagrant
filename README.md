@@ -22,7 +22,13 @@ I've decided to use rsync 2 times: when the box is started, one rsync syncs ever
 to the guest and after that one rsync constrantly syncs everything from the guest projects dir to the host
 projects dir through the shared folder which is used only by this command.
 I've used 30sec sleep before the sync from guest to host to run again so you may tweak it and make sure
-not to stop/destroy the box immediately after you saved a file there.
+not to stop/destroy the box immediately after you saved a file there.<br />
+Do not put new files on the host projects dir while the box is running.
+Stop the box, put a new dir with files and run again to resync the new files.
+Then use a sftp connection to get to the synced files inside the box. Connect with your IDE or use a program that maps
+a local drive through sftp.<br />
+Edit the files there and they will be synced every 30sec to the original host projects folder.<br />
+After you stop the box you can git commit/push for others to have the latest modifications from your project.
 
 Use "vagrant provision" if you make changes on the configuration files and they will be put in the running box and servers reloaded automatically.
 
