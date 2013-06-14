@@ -22,3 +22,19 @@ Use "vagrant provision" if you make changes on the configuration files and they 
 You have to install Vagrant, Puppet and Virtualbox before using this package.
 
 I am going to change this configuration from time to time while I am learning Vagrant, Puppet, bash, etc.
+
+
+One way to start using it under Windows:
+
+Remove all '' from the lines to run before executing them.
+
+1. Open Command Propmt (cmd) or powershell: (Win+R) + cmd + Enter .
+2. Go to an empty directory where you want to download it
+3. Execute: 'git clone git://github.com/Ljancho/Vagrant.git .' - dot at the end will put everything in the current dir.
+4. Execute 'vagrant up' .
+5. Wait for a while until the box is downloaded, converted to a virtualbox and ran, then wait for Puppet to install and
+configure everything for you.
+It should finish with success and then you can add this line to your hosts file (like: C:\Windows\System32\Drivers\etc\hosts)
+using Notepad with admin privileges: '127.0.0.1 vagranttest.local' .
+Save and go to: 'http://vagranttest.local/' to see the test php running.
+Congratulations! :)
