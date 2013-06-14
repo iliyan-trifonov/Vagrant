@@ -1,7 +1,7 @@
 #! /bin/bash
 numprocesses=$(ps aux | grep -c '[r]sync-2host.sh')
-# 1 running itself + 1 in the ps command line = 2 == no other external process running
-if [[ $numprocesses -gt 2 ]] ; then
+# 1 for this script + 1 already running = 2 == 1 external process is running
+if [[ $numprocesses -ge 2 ]] ; then
   echo "process is running, quitting this one"
 else
   echo "process is not running, starting an infinite loop"
