@@ -48,9 +48,10 @@ Congratulations! :)
 
 From here:
 
+Stop the vagrant box: 'vagrant halt'.<br />
 Put some new projects/files in the projects dir on the host.<br />
 Edit the nginx config, put new configs in sites-available and edit your hosts file.<br />
-Use http://vagranttest.local/phpmyadmin/ to manage your databases, with user and pass: 'root' by default.<br />
-Don't forget to 'vagrant provision' or 'vagrant halt' and then 'vagrant up' to resync the files
-from the host to the virtual box.<br />
+While the box is running use http://vagranttest.local/phpmyadmin/ to manage your databases,
+with user and pass: 'root' by default.<br />
+Execute 'vagrant up' to resync the files from the host to the virtual box.<br />
 If you want to change the default configuration that is created, edit the manifest/s and recreate/provision the box.
