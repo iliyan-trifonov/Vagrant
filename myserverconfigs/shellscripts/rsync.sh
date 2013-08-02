@@ -1,6 +1,3 @@
 #!/bin/bash
-#while [ 0 == 0 ]
-#do
-#  sudo rsync -vur --delete /vagrant/projects/ /var/www/projects
-#  sleep 1
-#done
+killall rsync-2host.sh
+rsync -vrt --inplace --delete --chmod=o+rw --owner=vagrant /vagrant/projects/ /home/vagrant/projects

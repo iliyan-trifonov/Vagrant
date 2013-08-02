@@ -3,15 +3,28 @@ group { "puppet":
 }
 
 File {
-  owner => 'root',
-  group => 'root',
+  owner => 'vagrant',
+  group => 'vagrant',
   mode  => '0644',
 }
 
-exec { "apt-get update":
-	path => "/usr/bin";
+file { "/home/vagrant/tmp":
+	ensure => directory,
+	mode => 0777
 }
 
+exec { "apt-get update":
+	command => "apt-get update && touch /home/vagrant/tmp/aptgetupdated",
+	path => "/usr/bin",
+	onlyif => "test ! -e /home/vagrant/tmp/aptgetupdated",
+	require => File["/home/vagrant/tmp"]
+}
+
+class puppet {
+	package { 'puppet':
+		ensure => latest
+	}
+}
 
 class htop {
 	package { "htop":
@@ -21,17 +34,27 @@ class htop {
 }
 
 class remove_apache {
-	service { "apache2":
+	#upstart not found workaround
+	file { '/etc/init.d/apache2':
+ 		ensure => link,
+    	target => '/lib/init/upstart-job',
+    	replace => 'no',
+    	owner => 'root',
+    	group => 'root',
+    	mode => 0755,
+    }
+	service { 'apache2':
 		ensure => stopped,
-		hasstatus => false
+		enable => false,
+		subscribe => File['/etc/init.d/apache2']
 	}
-	package { "apache2":
-	    ensure => purged,
+	package { 'apache2':
+	    ensure => absent
 	}
 	exec { 'autoremove':
 	    command => '/usr/bin/apt-get autoremove --purge -y',
 	    subscribe => Package['apache2'],
-	    refreshonly => true,
+	    refreshonly => true
 	}	
 }
 
@@ -105,10 +128,10 @@ class mysql {
 		require => Service['mysql']
 	}
 	exec { "create-sql-structure-data":
-		command => "mysql -u root -proot < /vagrant/myserverconfigs/mysql/db_struct.sql && touch /home/vagrant/sqlexecuted",
+		command => "/vagrant/myserverconfigs/shellscripts/importsql.sh",
 		path => ["/bin", "/usr/bin"],
-		require => Exec["set-mysql-password"],
-		onlyif => "test ! -e /home/vagrant/sqlexecuted"
+		require => [Exec["set-mysql-password"], File['/home/vagrant/tmp']],
+		onlyif => "test ! -e /home/vagrant/tmp/sqlexecuted",
 	}	
 }
 
@@ -125,27 +148,32 @@ class phpmyadmin {
 }
 
 class rsync {
+
+	$synctovagrant = "/vagrant/myserverconfigs/shellscripts/rsync.sh"
+	$synctohost = "/vagrant/myserverconfigs/shellscripts/rsync-2host.sh &"
+
 	package { "rsync":
 		ensure => present
 	}
+
 	exec { "rsync-project-dirs":
-		command => "rsync -vrt --inplace --delete --chmod=o+rw --owner=vagrant /vagrant/projects/ /home/vagrant/projects",
+		command => $synctovagrant,
 		path => ["/bin", "/usr/bin"],
-		require => Package["rsync"]
+		require => Package["rsync"],
 	}
-	$command = "/vagrant/myserverconfigs/shellscripts/rsync-2host.sh &"
+
 	exec { "rsync-project-dirs-2host":
-		command => $command,
+		command => $synctohost,
 		path => ["/bin", "/usr/bin"],
 		require => [Package["rsync"], Exec["rsync-project-dirs"]],
 		user => 'vagrant'
 	}	
 }
 
-include remove_apache
-include htop
 include php
-include nginx
 include mysql
 include phpmyadmin
+include htop
+include remove_apache
+include nginx
 include rsync
