@@ -16,6 +16,7 @@ You have to modify the nginx vhosts file too and also edit your hosts file if yo
 Port 80 of the guest is forwarded to port 80 of the host machine so a http://localhost should load the default nginx server config.
 
 Mysql configuration is using innodb with some base values for buffer pool, log files, etc. so you will probaly want to change them too.
+Put any number of *.sql files in myserverconfigs/mysql and they will be executed when the box is created for the first time.
 
 Instead of using the shared folders feature from the VM which I find very slow for a normal project structure
 I've decided to use rsync 2 times: when the box is started, one rsync syncs everything from host projects dir
