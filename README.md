@@ -33,7 +33,7 @@ After you stop the box you can git commit/push for others to have the latest mod
 
 Use "vagrant provision" if you make changes on the configuration files and they will be put in the running box and servers reloaded automatically.
 
-You have to install Vagrant, Puppet and Virtualbox before using this package.
+You have to install Vagrant and Virtualbox before using this package.
 
 I am going to change this configuration from time to time while I am learning Vagrant, Puppet, bash, etc.
 
