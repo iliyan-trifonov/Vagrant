@@ -1,3 +1,5 @@
+FileUtils.rm '.vagrant/machines/default/virtualbox/action_provision', :force => true
+
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
