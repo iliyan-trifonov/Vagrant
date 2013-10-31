@@ -114,10 +114,10 @@ class mysql {
 		ensure => running,
 		require => Package["mysql-server"]
 	}
-	file { "/etc/mysql/conf.d/myinnodbsettings.conf":
+	file { "/etc/mysql/conf.d/myinnodbsettings.cnf":
 		ensure => file,
-		path => "/etc/mysql/conf.d/myinnodbsettings.conf",
-		source => "/vagrant/myserverconfigs/mysql/myinnodbsettings.conf",
+		path => "/etc/mysql/conf.d/myinnodbsettings.cnf",
+		source => "/vagrant/myserverconfigs/mysql/myinnodbsettings.cnf",
 		require => Package["mysql-server"],
 		notify => Service["mysql"]
 	}
