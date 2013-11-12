@@ -1,6 +1,22 @@
 Vagrant with PHP, MySQL and Nginx
 =======
 
+###No more slow shared folders, slow loading sites/frameworks!
+
+###Automatically put everything inside the box and just sync the outside!
+
+1. `git clone/pull` the vagrant with your project
+2. start the box
+3. do your work for the day
+4. wait 30sec to be fully synced
+5. halt the box 
+6. `git add/commit/push`. That's it!
+
+###You can put all your projects inside one box, no slowdowns because no shared folders are used while working on the sites!
+
+What is it all about?
+-------
+
 A Vagrantfile config file and some Puppet manifests + shell scripts and server configurations
 
 This package will create an Ubuntu 12.10 64bit box in Virtualbox for web development with php5, mysql5, nginx,
